@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,20 +41,21 @@ const TransactionManagement = lazy(
 );
 
 const App = () => {
-  const { user, loading } = useSelector(
-    (state: RootState) => state.userReducer
-  );
+ // const { user, loading } = useSelector(
+   // (state: RootState) => state.userReducer
+  //);
 
+  return signOut(auth).then((c)) => console.log("done"));
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const data = await getUser(user.uid);
-        dispatch(userExist(data.user));
-      } else dispatch(userNotExist());
-    });
-  }, []);
+  //useEffect(() => {
+   // onAuthStateChanged(auth, async (user) => {
+     // if (user) {
+       // const data = await getUser(user.uid);
+        //dispatch(userExist(data.user));
+     // } else dispatch(userNotExist());
+    //});
+  //}, []);
 
   return loading ? (
     <Loader />
